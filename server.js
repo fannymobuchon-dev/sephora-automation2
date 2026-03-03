@@ -5,7 +5,9 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-const BROWSERLESS_TOKEN = process.env.BROWSERLESS_TOKEN || '2U4dyiq4fNAmHFT6f5cc1b077f9fac7e56f6b1a7aa0010f41';
+const BROWSERLESS_TOKEN = '2U4dyiq4fNAmHFT6f5cc1b077f9fac7e56f6b1a7aa0010f41';
+const NOTION_TOKEN = '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';
+const NOTION_DATABASE_ID = '317a64aa-d96d-80ff-bd5a-d3da770be758';
 
 async function extractBannerUrls(domain) {
   try {
@@ -80,10 +82,12 @@ async function uploadToImgur(imageBuffer) {
 }
 
 app.post('/capture', async (req, res) => {
-  let { country, domain, notionToken, notionDatabaseId } = req.body;
+  let { country, domain } = req.body;
+  const notionToken = NOTION_TOKEN;
+  const notionDatabaseId = NOTION_DATABASE_ID;
 
   console.log(`Démarrage capture pour ${country}...`);
-  console.log(`Données reçues:`, { country, domain, notionToken: notionToken ? 'OK' : 'MISSING', notionDatabaseId });
+  console.log(`Données reçues:`, { country, domain });
 
   try {
     // 1. Capturer la homepage
