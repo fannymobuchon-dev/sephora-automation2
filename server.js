@@ -5,7 +5,7 @@ const app = express();
 app.use(express.json());
 
 // Utiliser Browserless pour les captures
-const BROWSERLESS_TOKEN = 'YOUR_BROWSERLESS_TOKEN'; // On va le configurer après
+const BROWSERLESS_TOKEN = process.env.BROWSERLESS_TOKEN || 'YOUR_BROWSERLESS_TOKEN';
 
 async function extractBannerUrls(domain) {
   try {
@@ -121,8 +121,9 @@ app.post('/capture', async (req, res) => {
       const notionPayload = {
         parent: { database_id: notionDatabaseId },
         properties: {
+          'Name': { title: [{ text: { content: `${country}_S${weekNumber}` } }] },
           'Semaine': { number: weekNumber },
-          'Pays': { select: { name: country } },
+          'Pays': { rich_text: [{ text: { content: country } }] },
           'Homepage': { url: homepageUrl },
           'Redirection Main': { url: redirectMainUrl },
           'Redirection UB1': { url: redirectUb1Url },
