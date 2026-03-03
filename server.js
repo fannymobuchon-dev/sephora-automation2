@@ -2,7 +2,7 @@ const express = require('express');
 const axios = require('axios');
 
 const app = express();
-app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 // Utiliser Browserless pour les captures
 const BROWSERLESS_TOKEN = process.env.BROWSERLESS_TOKEN || 'YOUR_BROWSERLESS_TOKEN';
